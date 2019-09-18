@@ -1,0 +1,8 @@
+# package folders
+node_modules/
+.nyc_output/
+
+# files
+
+.env
+package-lock.json
