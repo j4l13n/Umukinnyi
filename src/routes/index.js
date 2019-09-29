@@ -1,11 +1,8 @@
 import express from 'express';
+import users from './users';
 
 const routes = express.Router();
 
-routes.get('/', (req, res) => {
-  res.status(200).json({
-    message: 'This is the default API route'
-  });
-});
+routes.use('/api', users);
 
 export default routes;
