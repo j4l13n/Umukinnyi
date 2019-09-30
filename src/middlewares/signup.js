@@ -26,7 +26,7 @@ class SignupValidation {
         .label('Username'),
       email: Joi.string().email().insensitive().required()
         .label('Email'),
-      phone: Joi.string().regex(/^(?=.*\d)[\d]{10,}$/).required().options({ language: { string: { regex: { base: 'must be only number and length 10' } } } })
+      phone: Joi.string().regex(/^(\([0-9]{3}\)\s*|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/).required().options({ language: { string: { regex: { base: 'must be a valid phone like (123-345-6778)' } } } })
         .label('Phonenumber'),
       password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/).required().options({ language: { string: { regex: { base: 'must be an alphanumeric with uppercase and the length not less than 8!' } } } })
         .label('Password'),
