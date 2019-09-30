@@ -1,27 +1,30 @@
+import { readdirSync } from 'fs';
+import { basename as _basename, join } from 'path';
+import Sequelize from 'sequelize';
+import configuration from '../config/config';
 
-
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-
-const basename = path.basename(__filename);
+const basename = _basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require('../config/config.js')[env];
 
+const config = configuration[env];
 const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: true
+    }
+  });
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-fs
-  .readdirSync(__dirname)
+readdirSync(__dirname)
   .filter(file => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
   .forEach((file) => {
-    const model = sequelize.import(path.join(__dirname, file));
+    const model = sequelize.import(join(__dirname, file));
     db[model.name] = model;
   });
 
@@ -34,4 +37,4 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;

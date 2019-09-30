@@ -1,4 +1,5 @@
 import express from 'express';
+import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import logger from 'morgan';
@@ -9,6 +10,8 @@ import swaggerDoc from 'swagger-jsdoc';
 import routes from './routes';
 
 const app = express();
+
+dotenv.config();
 
 app.use(cors());
 app.use(logger('dev'));
